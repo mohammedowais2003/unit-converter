@@ -1,6 +1,6 @@
 import streamlit as st
 
-# Apply custom CSS with dark/black labels and white input text
+# Apply custom CSS with dark-friendly styles and white input text
 st.markdown(
     """
     <style>
@@ -10,20 +10,21 @@ st.markdown(
         --accent: #4895ef;
         --light: #f8f9fa;
         --dark: #212529;
-        --text: #212529;
-        --label: #212529;
+        --text: white;
+        --label: white;
     }
 
     .stApp {
-        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        background: linear-gradient(135deg, #2c2f33 0%, #1e2124 100%);
         min-height: 100vh;
+        color: white !important;
     }
 
     .main-container {
         max-width: 800px;
         margin: 0 auto;
         padding: 2rem;
-        background: white;
+        background: #343a40;
         border-radius: 20px;
         box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
         margin-top: 2rem;
@@ -32,7 +33,7 @@ st.markdown(
 
     h1 {
         text-align: center;
-        color: var(--dark) !important;
+        color: white !important;
         font-size: 2.5rem;
         margin-bottom: 1.5rem;
         font-weight: 700;
@@ -40,19 +41,33 @@ st.markdown(
 
     .description {
         text-align: center;
-        color: var(--dark) !important;
+        color: white !important;
         margin-bottom: 2rem;
         font-size: 1.1rem;
     }
 
     label {
-        color: var(--label) !important;
+        color: white !important;
         font-weight: 500 !important;
     }
 
     .stSelectbox div[data-baseweb="select"] {
         border-radius: 12px !important;
         border: 2px solid var(--accent) !important;
+        background-color: #212529 !important;
+    }
+
+    .stSelectbox div[data-baseweb="select"] div {
+        color: white !important;
+    }
+
+    .stSelectbox ul[role="listbox"] li {
+        color: white !important;
+        background-color: #343a40 !important;
+    }
+
+    [data-baseweb="popover"] {
+        background-color: #343a40 !important;
     }
 
     .stNumberInput input {
@@ -60,6 +75,8 @@ st.markdown(
         border: 2px solid var(--accent) !important;
         font-size: 1rem !important;
         padding: 0.75rem 1rem !important;
+        color: white !important;
+        background-color: #212529 !important;
     }
 
     .stButton>button {
@@ -84,10 +101,10 @@ st.markdown(
         font-size: 1.25rem;
         font-weight: 600;
         text-align: center;
-        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        background: linear-gradient(135deg, #2c2f33 0%, #1e2124 100%);
         padding: 1.5rem;
         border-radius: 15px;
-        color: var(--dark) !important;
+        color: white !important;
         margin-top: 2rem;
         box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
         border-left: 5px solid var(--primary);
@@ -97,51 +114,33 @@ st.markdown(
         text-align: center;
         margin-top: 3rem;
         font-size: 0.9rem;
-        color: var(--dark) !important;
+        color: white !important;
         opacity: 0.7;
     }
 
     .conversion-card {
-        background: white;
+        background: #212529;
         border-radius: 15px;
         padding: 1.5rem;
         margin-bottom: 1.5rem;
         box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-        border: 1px solid rgba(0, 0, 0, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
     }
 
     .category-selector {
-        background: white !important;
+        background: #343a40 !important;
         border-radius: 15px !important;
         padding: 1rem !important;
         box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05) !important;
     }
 
     .stSidebar .sidebar-content {
-        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%) !important;
+        background: linear-gradient(135deg, #2c2f33 0%, #1e2124 100%) !important;
+        color: white !important;
     }
 
     p, div, span, h1, h2, h3, h4, h5, h6 {
-        color: var(--dark) !important;
-    }
-
-    /* Make input text white with dark backgrounds */
-    input, select, textarea, .stNumberInput input {
         color: white !important;
-        background-color: #212529 !important;
-    }
-
-    .stSelectbox div[data-baseweb="select"] div {
-        color: white !important;
-    }
-
-    .stSelectbox ul[role="listbox"] li {
-        color: white !important;
-        background-color: #343a40 !important;
-    }
-
-    [data-baseweb="popover"] {
-        background-color: #343a40 !important;
     }
 
     @media (max-width: 768px) {
@@ -161,31 +160,32 @@ st.markdown("<div class='main-container'>", unsafe_allow_html=True)
 # Title and description
 st.markdown("<h1>🔢 Advanced Unit Converter</h1>", unsafe_allow_html=True)
 st.markdown(
-    "<p class='description'>Convert between different units of measurement with precision and ease. Select a category and enter your values below.</p>",
+    "<p class='description'>Convert between different units of measurement with precision and ease. Select a category and enter your values below.</p>", 
     unsafe_allow_html=True
 )
 
-# Sidebar menu
+# Sidebar menu with icon
 with st.sidebar:
     st.markdown("## ⚙️ Conversion Settings")
     conversion_type = st.selectbox(
-        "Select Category",
+        "Select Category", 
         ["Length", "Weight", "Temperature", "Area", "Volume", "Speed"],
         key="conversion_type"
     )
 
-# Input card
+# Input section
 st.markdown("<div class='conversion-card'>", unsafe_allow_html=True)
 value = st.number_input(
-    "Enter Value to Convert",
-    min_value=0.0,
+    "Enter Value to Convert", 
+    min_value=0.0, 
     format="%.6f",
     key="input_value"
 )
 
-# Columns for unit selection
+# Layout for the conversion
 col1, col2 = st.columns(2)
 
+# Unit selection based on category
 if conversion_type == "Length":
     units = ["millimeter", "centimeter", "meter", "kilometer", "inch", "foot", "yard", "mile"]
     with col1:
@@ -208,7 +208,7 @@ elif conversion_type == "Temperature":
         to_unit = st.selectbox("To Unit", units, index=1, key="to_temp")
 
 elif conversion_type == "Area":
-    units = ["square millimeter", "square centimeter", "square meter", "square kilometer",
+    units = ["square millimeter", "square centimeter", "square meter", "square kilometer", 
              "square inch", "square foot", "square yard", "acre", "hectare"]
     with col1:
         from_unit = st.selectbox("From Unit", units, index=2, key="from_area")
@@ -216,7 +216,7 @@ elif conversion_type == "Area":
         to_unit = st.selectbox("To Unit", units, index=3, key="to_area")
 
 elif conversion_type == "Volume":
-    units = ["milliliter", "liter", "cubic meter", "cubic centimeter", "cubic inch",
+    units = ["milliliter", "liter", "cubic meter", "cubic centimeter", "cubic inch", 
              "cubic foot", "gallon", "quart", "pint", "fluid ounce"]
     with col1:
         from_unit = st.selectbox("From Unit", units, index=1, key="from_volume")
@@ -230,7 +230,7 @@ elif conversion_type == "Speed":
     with col2:
         to_unit = st.selectbox("To Unit", units, index=2, key="to_speed")
 
-st.markdown("</div>", unsafe_allow_html=True)
+st.markdown("</div>", unsafe_allow_html=True)  # Close conversion-card
 
 # Conversion functions
 def length_converter(value, from_unit, to_unit):
@@ -259,11 +259,21 @@ def weight_converter(value, from_unit, to_unit):
 
 def temperature_converter(value, from_unit, to_unit):
     if from_unit == "celsius":
-        return (value * 9/5) + 32 if to_unit == "fahrenheit" else value + 273.15 if to_unit == "kelvin" else value
-    if from_unit == "fahrenheit":
-        return (value - 32) * 5/9 if to_unit == "celsius" else (value - 32) * 5/9 + 273.15 if to_unit == "kelvin" else value
-    if from_unit == "kelvin":
-        return value - 273.15 if to_unit == "celsius" else (value - 273.15) * 9/5 + 32 if to_unit == "fahrenheit" else value
+        if to_unit == "fahrenheit":
+            return (value * 9/5) + 32
+        elif to_unit == "kelvin":
+            return value + 273.15
+    elif from_unit == "fahrenheit":
+        if to_unit == "celsius":
+            return (value - 32) * 5/9
+        elif to_unit == "kelvin":
+            return (value - 32) * 5/9 + 273.15
+    elif from_unit == "kelvin":
+        if to_unit == "celsius":
+            return value - 273.15
+        elif to_unit == "fahrenheit":
+            return (value - 273.15) * 9/5 + 32
+    return value
 
 def area_converter(value, from_unit, to_unit):
     factors = {
@@ -304,45 +314,53 @@ def speed_converter(value, from_unit, to_unit):
     }
     return value * factors[from_unit] / factors[to_unit]
 
-# Buttons
+# Convert and Reset buttons
 col_convert, col_reset = st.columns(2)
-convert_btn = col_convert.button("🚀 Convert", key="convert")
-reset_btn = col_reset.button("🔄 Reset", key="reset")
+with col_convert:
+    convert_btn = st.button("🚀 Convert", key="convert")
+with col_reset:
+    reset_btn = st.button("🔄 Reset", key="reset")
 
-# Conversion logic
+# Perform conversion
 if convert_btn:
-    try:
-        if from_unit == to_unit:
-            result = value
-        else:
-            converter_map = {
-                "Length": length_converter,
-                "Weight": weight_converter,
-                "Temperature": temperature_converter,
-                "Area": area_converter,
-                "Volume": volume_converter,
-                "Speed": speed_converter
-            }
-            result = converter_map[conversion_type](value, from_unit, to_unit)
+    if from_unit == to_unit:
+        result = value
+    else:
+        try:
+            if conversion_type == "Length":
+                result = length_converter(value, from_unit, to_unit)
+            elif conversion_type == "Weight":
+                result = weight_converter(value, from_unit, to_unit)
+            elif conversion_type == "Temperature":
+                result = temperature_converter(value, from_unit, to_unit)
+            elif conversion_type == "Area":
+                result = area_converter(value, from_unit, to_unit)
+            elif conversion_type == "Volume":
+                result = volume_converter(value, from_unit, to_unit)
+            elif conversion_type == "Speed":
+                result = speed_converter(value, from_unit, to_unit)
 
-        st.markdown(
-            f"<div class='result-box'>"
-            f"<div style='font-size: 1.1rem; margin-bottom: 0.5rem;'>Conversion Result</div>"
-            f"<div style='font-size: 1.5rem;'>{value:.6g} {from_unit} = {result:.6g} {to_unit}</div>"
-            f"</div>",
-            unsafe_allow_html=True
-        )
-    except Exception as e:
-        st.error(f"An error occurred: {str(e)}")
+            st.markdown(
+                f"<div class='result-box'>"
+                f"<div style='font-size: 1.1rem; margin-bottom: 0.5rem;'>Conversion Result</div>"
+                f"<div style='font-size: 1.5rem;'>{value:.6g} {from_unit} = {result:.6g} {to_unit}</div>"
+                f"</div>", 
+                unsafe_allow_html=True
+            )
+        except Exception as e:
+            st.error(f"An error occurred during conversion: {str(e)}")
 
+# Reset functionality
 if reset_btn:
     st.cache_data.clear()
     st.rerun()
 
 # Footer
 st.markdown(
-    "<div class='footer'>© 2023 Advanced Unit Converter | Made with Streamlit</div>",
+    "<div class='footer'>"
+    "© 2023 Advanced Unit Converter | Made with Streamlit"
+    "</div>", 
     unsafe_allow_html=True
 )
 
-st.markdown("</div>", unsafe_allow_html=True)
+st.markdown("</div>", unsafe_allow_html=True)  # Close main-container
